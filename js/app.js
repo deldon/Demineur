@@ -1,10 +1,10 @@
 
 let game = {
     sizeGame: {
-        y: 5,
-        x: 5,
+        y: 7,
+        x: 9,
     },
-    nbOfBomb: 5,
+    nbOfBomb: 10,
     bomb: [],
     nbOfClick: 0,
     nbMaxClick: 0,
@@ -153,7 +153,7 @@ let game = {
                 game.nbOfClick++;  
                 game.winGame()
                 event.target.dataset.click = 'false';
-            }
+            
 
             if (game.isBomb(event.target.dataset.x, event.target.dataset.y)) {
                 event.target.classList.add('bomb');
@@ -165,7 +165,9 @@ let game = {
                 event.target.classList.add('safe');
 
                 if (nbDeBomb === 0) {
-                    game.erase(event.target.dataset.x,event.target.dataset.y);
+                  // console.log("zero");
+                   //game.erase(parseInt(event.target.dataset.x), parseInt(event.target.dataset.y));
+
                 }
                 if (nbDeBomb > 0) {
                     event.target.innerHTML = nbDeBomb;
@@ -175,6 +177,7 @@ let game = {
 
 
             }
+         }
         }
     },
     colorNumber: (nbDeBomb) => {
@@ -195,11 +198,25 @@ let game = {
 
     },
     erase: (x,y) => {
-        
+ //console.log("erase");
+        game.cssList(x-1,y-1);
+        game.cssList(x-1,y);
+        game.cssList(x-1,y+1);
+
+        game.cssList(x,y-1);
+        game.cssList(x,y+1);
+
+        game.cssList(x+1,y-1);
+        game.cssList(x+1,y);
+        game.cssList(x+1,y+1);
+
+       
 
     },
 
     cssList: (x,y) => {
+        let nbDeBomb = game.isProxi(x,y)
+        //console.log('nbBomb',nbDeBomb);
 
         const cell = document.getElementsByClassName('cell--box');
 
@@ -210,7 +227,18 @@ let game = {
 
             if (parseInt(cell[i].dataset.x) == x && parseInt(cell[i].dataset.y) == y) {
                
-                console.log(cell[i].classList.add('safe'));
+                cell[i].classList.add('safe');
+                
+
+                if (nbDeBomb === 0) {
+                  //game.erase(cell[i].dataset.x,cell[i].dataset.y)
+                }
+                if (nbDeBomb > 0) {
+                    cell[i].innerHTML = nbDeBomb;
+                }
+
+                cell[i].classList.add(game.colorNumber(nbDeBomb));
+                
         
             }
         }  
@@ -226,7 +254,7 @@ let game = {
 
     winGame: () => {
 
-       //console.log(game.nbOfClick);
+       console.log(game.nbOfClick);
         if (game.nbOfClick === game.nbMaxClick) {
             game.gameOver = true;
             const board = document.querySelector('#board');
