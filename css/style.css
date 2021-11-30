@@ -3,6 +3,7 @@ height: 100vh;
 display: flex;
 justify-content: center;
 align-items: center;
+background-color: rgb(17, 128, 128) ;
 
 }
     
@@ -29,6 +30,7 @@ border: 3px inset #ececec;
     cursor: pointer;
     
 }
+
 
 .red{
 
@@ -110,6 +112,9 @@ border: 3px inset #ececec;
    
     background-size: contain;
 }
+#smiley:active {
+    border: 3px inset #ececec;
+  }
 
 .gameOk{
     background-image: url(../img/win.png); 

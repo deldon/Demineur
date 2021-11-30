@@ -4,14 +4,35 @@ let game = {
         y: 5,
         x: 5,
     },
-    nbOfBomb: 4,
+    nbOfBomb: 1,
     bomb: [],
     nbOfClick: 0,
+    nbMaxClick: 0,
     gameOver: false,
     init: () => {
+        game.gameOver = false
+        game.nbOfClick = 0;
+        const cellOfGame = game.sizeGame.x * game.sizeGame.y;
+        game.nbMaxClick = (cellOfGame - game.nbOfBomb);
+
+
+
+
+        game.bomb = [];
         game.generateBomb(game.nbOfBomb);
+
         game.generateBoard();
-        game.smiley('start');
+        
+        const smiley = document.querySelector('#smiley')
+        
+        smiley.classList.remove('gameOver')
+        smiley.classList.remove('gameWin')
+        smiley.classList.add('gameOk')
+
+        smiley.addEventListener('click', game.init);
+        
+
+
 
         let board = document.getElementById('game');
 
@@ -57,6 +78,7 @@ let game = {
     generateBoard: () => {
 
         let board = document.getElementById('game');
+        board.innerHTML = "";
 
 
         for (let y = 0; y < game.sizeGame.y; y++) {
@@ -129,7 +151,7 @@ let game = {
             if (event.target.dataset.click === 'true') {
 
                 game.nbOfClick++;  
-                game.winGame(game.nbOfClick)
+                game.winGame()
                 event.target.dataset.click = 'false';
             }
 
@@ -142,29 +164,58 @@ let game = {
                 
                 event.target.classList.add('safe');
 
+                if (nbDeBomb === 0) {
+                    game.erase(event.target.dataset.x,event.target.dataset.y);
+                }
                 if (nbDeBomb > 0) {
                     event.target.innerHTML = nbDeBomb;
                 }
-                if (nbDeBomb === 1) {
-                    
-                    event.target.classList.add('blue');
-                }
-                if (nbDeBomb === 2) {
-                    
-                    event.target.classList.add('green');
-                }
-                if (nbDeBomb === 3) {
-                    
-                    event.target.classList.add('red');
-                }
-                if (nbDeBomb === 3) {
-                    
-                    event.target.classList.add('red');
-                }
+
+                event.target.classList.add(game.colorNumber(nbDeBomb));
+
 
             }
         }
     },
+    colorNumber: (nbDeBomb) => {
+
+
+        if (nbDeBomb === 1) {
+            return 'blue';
+            
+        }
+        if (nbDeBomb === 2) {
+            return 'green';
+            
+        }
+        if (nbDeBomb === 3) {
+            return 'red';
+           
+        }
+
+    },
+    erase: (x,y) => {
+        
+
+    },
+
+    cssList: (x,y) => {
+
+        const cell = document.getElementsByClassName('cell--box');
+
+        for (let i = 0; i < cell.length; i++) {
+            
+            //console.log(parseInt(cell[i].dataset.x));
+            //console.log('argu',x);
+
+            if (parseInt(cell[i].dataset.x) == x && parseInt(cell[i].dataset.y) == y) {
+               
+                console.log(cell[i].classList.add('safe'));
+        
+            }
+        }  
+    },
+
     myClickRight: (event) => {
 
         if (!event.target.classList.contains('safe') && game.gameOver === false) {
@@ -172,11 +223,11 @@ let game = {
         }
 
     },
-    winGame: (point) => {
-        const cellOfGame = game.sizeGame.x * game.sizeGame.y
-        let restPoint = (cellOfGame - game.nbOfBomb) - point;
 
-        if (restPoint === 0) {
+    winGame: () => {
+
+        console.log(game.nbOfClick);
+        if (game.nbOfClick === game.nbMaxClick) {
             game.gameOver = true;
             const board = document.querySelector('#board');
             //board.innerHTML = '<p>Win</p>'
@@ -202,9 +253,7 @@ let game = {
         if (etat == 'over') {
             smiley.classList.add('gameOver')
         }
-        if (etat == 'start') {
-            smiley.classList.add('gameOk')
-        }
+
     },
 
 }
