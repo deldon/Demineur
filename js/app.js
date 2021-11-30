@@ -4,7 +4,7 @@ let game = {
         y: 5,
         x: 5,
     },
-    nbOfBomb: 1,
+    nbOfBomb: 5,
     bomb: [],
     nbOfClick: 0,
     nbMaxClick: 0,
@@ -70,7 +70,7 @@ let game = {
                 }
                 
         }
-        console.log('av',game.bomb);
+        //console.log('av',game.bomb);
        
  
 
@@ -226,7 +226,7 @@ let game = {
 
     winGame: () => {
 
-        console.log(game.nbOfClick);
+       //console.log(game.nbOfClick);
         if (game.nbOfClick === game.nbMaxClick) {
             game.gameOver = true;
             const board = document.querySelector('#board');
@@ -245,7 +245,7 @@ let game = {
     },
 
     smiley: (etat) => {
-        console.log(etat);
+        //console.log(etat);
         const smiley = document.querySelector('#smiley')
         if (etat == 'win') {
             smiley.classList.add('gameWin')
