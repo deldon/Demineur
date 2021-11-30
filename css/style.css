@@ -1,0 +1,102 @@
+body{
+height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+
+}
+    
+#game{
+display: flex;
+border: 3px inset #ececec;
+
+}
+
+.cell--box{
+    border: 1px solid rgba(138, 138, 138, 0);
+    min-width: 0px;
+    display: block;
+ 
+    width: 23px;
+    height: 23px;
+    box-sizing: border-box;
+ 
+    border: 3px outset #ececec;
+
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    
+}
+
+.red{
+
+    color: red;
+}
+
+.green{
+
+    color: green;
+}
+
+.blue{
+
+    color: rgb(41, 38, 221);
+}
+
+.flag{
+
+    background-image: url(../img/ok.png);
+    background-size: contain;
+
+}
+
+
+.safe{
+
+    background-color: rgb(189, 189, 189);
+    box-shadow: none;
+    box-sizing: border-box;
+    border: none;
+    border: 1px solid rgb(138, 138, 138);
+  
+    text-align: center;
+    padding: 0.1rem 0.3rem;
+    font-size: 1rem;  
+
+}
+
+.bomb{
+    background-image: url(../img/bomb.png);
+    background-size: contain;
+    background-color: rgb(245, 58, 58);
+    box-shadow: none;
+    box-sizing: border-box;
+    border: none;
+    border: 1px solid rgb(138, 138, 138);
+  
+    text-align: center;
+    padding: 0.5rem;
+    
+}
+
+
+
+
+#full{
+    
+    
+    
+}
+
+#board{
+    height: 2rem;
+    
+    border: 3px inset #ececec;
+    margin-bottom: 0.5rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+

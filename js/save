@@ -1,0 +1,165 @@
+console.log("haha");
+let game = {
+    sizeGame: {
+        y: 5,
+        x: 5,
+    },
+    bomb: {
+        y: [],
+        x: [],
+    },
+    nbOfClick: 0,
+    init: () => {
+        game.generateBomb(15);
+        game.generateBoard();
+
+    },
+    getRandomInt: (min, max) => {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min;
+    },
+    generateBomb: (nb) => {
+
+        for (let q = 0; q < nb; q++) {
+
+
+            game.bomb.x.push(game.getRandomInt(0, game.sizeGame.x))
+            game.bomb.y.push(game.getRandomInt(0, game.sizeGame.y))
+        }
+        console.log(game.bomb);
+
+    },
+    generateBoard: () => {
+
+        let board = document.getElementById('game');
+
+
+        for (let y = 0; y < game.sizeGame.y; y++) {
+            let row = document.createElement('div');
+            board.appendChild(row);
+
+            for (let x = 0; x < game.sizeGame.x; x++) {
+
+                let cell = document.createElement('div');
+                cell.classList.add('cell--box');
+                cell.dataset.y = y;
+                cell.dataset.x = x;
+                cell.dataset.click = true;
+                row.appendChild(cell);
+                // console.log('x - y ',x,y);
+
+            }
+
+        }
+
+    },
+    isBomb: (x, y) => {
+        let explosion = false;
+
+        for (let m = 0; m < game.bomb.x.length; m++) {
+            //console.log("isbonb",game.bomb.x[m],game.bomb.y[m]);
+
+            if (x == game.bomb.x[m] && y == game.bomb.y[m]) {
+                explosion = true;
+
+
+            }
+        }
+        return explosion;
+    },
+
+    isProxi: (x, y) => {
+
+        let nbBomb = 0;
+
+        // A
+        if (game.isBomb(x - 1, y - 1)) {
+            nbBomb = nbBomb + 1;
+            //console.log('HG',nbBomb);
+        }
+
+        // B
+        if (game.isBomb(x - 1, y)) {
+            nbBomb = nbBomb + 1;
+            //console.log('HC',nbBomb);
+        }
+
+        // C
+        if (game.isBomb(x - 1, y + 1)) {
+            nbBomb = nbBomb + 1;
+            //console.log('HD',nbBomb);
+        }
+
+        // D
+        if (game.isBomb(x, y - 1)) {
+            nbBomb = nbBomb + 1;
+            //console.log('CG',nbBomb);
+        }
+
+        // F
+        if (game.isBomb(x, y + 1)) {
+            nbBomb = nbBomb + 1;
+            //console.log('CD',nbBomb);
+        }
+
+        // G
+        if (game.isBomb(x + 1, y - 1)) {
+            nbBomb = nbBomb + 1;
+            //console.log('BG',nbBomb);
+        }
+
+        // H
+        if (game.isBomb(x + 1, y)) {
+            nbBomb = nbBomb + 1;
+            //console.log('BC',nbBomb);
+        }
+
+        // I
+        if (game.isBomb(x + 1, y + 1)) {
+            nbBomb = nbBomb + 1;
+            //console.log('BD',nbBomb);
+        }
+
+
+        return nbBomb;
+
+    },
+
+    myClick: (event) => {
+
+        const cell = event.target;
+
+
+        if (cell.classList.contains('cell--box')) {
+
+
+
+
+            if (event.target.dataset.click === 'true') {
+
+                game.nbOfClick++;
+                console.log("point",game.nbOfClick);
+                event.target.dataset.click = 'false';
+            }
+
+            if (game.isBomb(event.target.dataset.x, event.target.dataset.y)) {
+                event.target.classList.add('bomb');
+                //alert('gameover');
+            } else {
+
+                event.target.innerHTML = game.isProxi(parseInt(event.target.dataset.x), parseInt(event.target.dataset.y))
+            }
+        }
+    },
+
+}
+
+game.init();
+
+
+//console.log('saucisse');
+
+let board = document.getElementById('game');
+
+board.addEventListener('click', game.myClick);
