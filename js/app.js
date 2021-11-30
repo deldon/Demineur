@@ -11,6 +11,7 @@ let game = {
     init: () => {
         game.generateBomb(game.nbOfBomb);
         game.generateBoard();
+        game.smiley('start');
 
         let board = document.getElementById('game');
 
@@ -178,7 +179,8 @@ let game = {
         if (restPoint === 0) {
             game.gameOver = true;
             const board = document.querySelector('#board');
-            board.innerHTML = '<p>Win</p>'
+            //board.innerHTML = '<p>Win</p>'
+            game.smiley('win');
             
         }
         
@@ -187,8 +189,23 @@ let game = {
     overGame: () => {
         game.gameOver = true;
         const board = document.querySelector('#board');
-        board.innerHTML = '<p>Game Over</p>'
-    }
+        //board.innerHTML = '<p>Game Over</p>'
+        game.smiley('over');
+    },
+
+    smiley: (etat) => {
+        console.log(etat);
+        const smiley = document.querySelector('#smiley')
+        if (etat == 'win') {
+            smiley.classList.add('gameWin')
+        }
+        if (etat == 'over') {
+            smiley.classList.add('gameOver')
+        }
+        if (etat == 'start') {
+            smiley.classList.add('gameOk')
+        }
+    },
 
 }
 
